@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mose &middot; Power Platform &amp; Copilot Studio Portfolio</title>
@@ -8,12 +16,12 @@
 <meta property="og:title" content="Mose · Power Platform & Copilot Studio Portfolio" />
 <meta property="og:description" content="Live portfolio of open-source work across Power Platform, Copilot Studio and governance tooling." />
 <meta property="og:type" content="website" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b5cab'/%3E%3Ctext x='16' y='22' font-family='Segoe UI,Arial' font-size='16' font-weight='700' fill='white' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://api.github.com" />
 <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
 <a class="skip-link" href="#repos">Skip to repositories</a>
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
 <header class="site-header">
   <div class="wrap header-inner">
@@ -25,6 +33,9 @@
       <a href="#focus">Focus</a>
       <a href="#repos">Repositories</a>
       <a href="#contact">Contact</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme">
+        <span class="theme-icon" aria-hidden="true">◐</span>
+      </button>
       <a class="btn btn-ghost" href="https://github.com/MSPFE2019" target="_blank" rel="noopener">GitHub profile</a>
     </nav>
   </div>
@@ -33,9 +44,9 @@
 <main id="top">
   <section class="hero">
     <div class="wrap hero-inner">
-      <div class="hero-copy">
+      <div class="hero-copy reveal">
         <p class="eyebrow">Microsoft Power Platform &middot; Copilot Studio</p>
-        <h1>Building governed, low-code solutions that scale.</h1>
+        <h1>Building <span class="accent-text">governed intelligence</span> that scales.</h1>
         <p class="lede">
           I design and ship Power Platform and Copilot Studio solutions — agents, governance
           guardrails, ALM pipelines and admin tooling — and share the reusable pieces as open source.
@@ -51,48 +62,65 @@
           <div><dt>Languages</dt><dd data-stat="languages">—</dd></div>
         </dl>
       </div>
-      <div class="hero-card" aria-hidden="true">
-        <div class="hero-card-glow"></div>
-        <div class="hero-card-body">
-          <div class="chip-row">
-            <span class="chip">Power Apps</span>
-            <span class="chip">Power Automate</span>
-            <span class="chip">Copilot Studio</span>
-          </div>
-          <div class="chip-row">
-            <span class="chip">Dataverse</span>
-            <span class="chip">Governance</span>
-            <span class="chip">ALM</span>
-          </div>
-          <div class="hero-card-bars">
-            <span style="--w:88%"></span>
-            <span style="--w:64%"></span>
-            <span style="--w:76%"></span>
-            <span style="--w:41%"></span>
+      <div class="hero-visual reveal" id="hero-visual">
+        <canvas id="hero-canvas" aria-hidden="true"></canvas>
+        <div class="orbit-core" aria-hidden="true">
+          <span class="core-pulse"></span>
+          <strong>M</strong>
+          <small>Build system</small>
+        </div>
+        <div class="orbit-node node-agent" data-node="agent"><span>✦</span>Copilot agents</div>
+        <div class="orbit-node node-apps" data-node="apps"><span>◇</span>Power Apps</div>
+        <div class="orbit-node node-data" data-node="data"><span>▦</span>Dataverse</div>
+        <div class="orbit-node node-guard" data-node="guard"><span>⬡</span>Governance</div>
+        <div class="visual-status" aria-hidden="true">
+          <span class="status-dot"></span>
+          <div>
+            <small>System status</small>
+            <strong>All flows connected</strong>
           </div>
         </div>
       </div>
     </div>
+    <div class="hero-hint" aria-hidden="true"><span></span> Move your pointer through the system</div>
   </section>
+
+  <div class="capability-rail" aria-label="Technology focus">
+    <div class="rail-track">
+      <span>Copilot Studio</span><i></i><span>Power Apps</span><i></i><span>Power Automate</span><i></i><span>Dataverse</span><i></i><span>Governance</span><i></i><span>ALM</span><i></i>
+      <span aria-hidden="true">Copilot Studio</span><i aria-hidden="true"></i><span aria-hidden="true">Power Apps</span><i aria-hidden="true"></i><span aria-hidden="true">Power Automate</span><i aria-hidden="true"></i><span aria-hidden="true">Dataverse</span><i aria-hidden="true"></i><span aria-hidden="true">Governance</span><i aria-hidden="true"></i><span aria-hidden="true">ALM</span><i aria-hidden="true"></i>
+    </div>
+  </div>
 
   <section id="focus" class="section">
     <div class="wrap">
-      <h2 class="section-title">What I focus on</h2>
-      <p class="section-lede">Practical engineering across the Microsoft low-code stack, with governance treated as a first-class feature.</p>
+      <div class="section-heading reveal">
+        <p class="eyebrow">Capabilities</p>
+        <h2 class="section-title">What I focus on</h2>
+        <p class="section-lede">Practical engineering across the Microsoft low-code stack, with governance treated as a first-class feature.</p>
+      </div>
       <div class="focus-grid">
-        <article class="focus-card">
+        <article class="focus-card reveal tilt-card">
+          <span class="focus-number">01</span>
+          <span class="focus-icon" aria-hidden="true">✦</span>
           <h3>Copilot Studio agents</h3>
           <p>Topic design, knowledge sources, actions and connector wiring — plus testing and publishing patterns that survive real users.</p>
         </article>
-        <article class="focus-card">
+        <article class="focus-card reveal tilt-card">
+          <span class="focus-number">02</span>
+          <span class="focus-icon" aria-hidden="true">⬡</span>
           <h3>Governance &amp; admin</h3>
           <p>Environment strategy, DLP policies, CoE-style reporting and automated guardrails so makers can move fast safely.</p>
         </article>
-        <article class="focus-card">
+        <article class="focus-card reveal tilt-card">
+          <span class="focus-number">03</span>
+          <span class="focus-icon" aria-hidden="true">↯</span>
           <h3>ALM &amp; automation</h3>
           <p>Solution-aware pipelines, source control for Power Platform, and scripted deployments with PowerShell and the Power Platform CLI.</p>
         </article>
-        <article class="focus-card">
+        <article class="focus-card reveal tilt-card">
+          <span class="focus-number">04</span>
+          <span class="focus-icon" aria-hidden="true">▦</span>
           <h3>Data &amp; integration</h3>
           <p>Dataverse modelling, SharePoint and Graph integration, and migrating legacy Access apps onto modern platforms.</p>
         </article>
@@ -102,15 +130,16 @@
 
   <section id="repos" class="section section-alt">
     <div class="wrap">
-      <div class="repos-head">
+      <div class="repos-head reveal">
         <div>
+          <p class="eyebrow">Open source</p>
           <h2 class="section-title">Repositories</h2>
           <p class="section-lede">Live from the GitHub REST API — always current, never hand-maintained.</p>
         </div>
         <button class="btn btn-ghost" type="button" id="refresh" aria-label="Refresh repositories">Refresh</button>
       </div>
 
-      <div class="controls" role="search">
+      <div class="controls reveal" role="search">
         <div class="field field-grow">
           <label for="search">Search</label>
           <input id="search" type="search" placeholder="Search name, description or topic…" autocomplete="off" />
@@ -150,7 +179,7 @@
   </section>
 
   <section id="contact" class="section">
-    <div class="wrap contact-inner">
+    <div class="wrap contact-inner reveal">
       <div>
         <h2 class="section-title">Let's build something</h2>
         <p class="section-lede">Open to collaboration on Power Platform, Copilot Studio and governance tooling.</p>

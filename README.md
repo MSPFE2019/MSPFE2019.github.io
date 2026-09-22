@@ -9,7 +9,7 @@ API at page load, so the site never needs to be updated when repositories change
 ```
 index.html            Landing page markup (hero, focus areas, repositories, contact)
 assets/css/styles.css Responsive Microsoft-inspired theme with light/dark support
-assets/js/app.js      GitHub REST API feed: fetch, cache, filter, sort, render
+assets/js/app.js      GitHub feed plus canvas, reveal, tilt and theme interactions
 .nojekyll             Serve files as-is (no Jekyll processing)
 ```
 
@@ -27,6 +27,14 @@ assets/js/app.js      GitHub REST API feed: fetch, cache, filter, sort, render
 
 Unauthenticated GitHub API calls are limited to 60 requests/hour per IP; the cache keeps
 normal browsing well under that.
+
+## Interaction and accessibility
+
+- The hero includes a pointer-reactive canvas network and animated capability nodes.
+- Focus and repository cards use subtle pointer tilt and spotlight effects.
+- Sections reveal as they enter the viewport, with a page scroll-progress indicator.
+- A header control toggles light/dark themes and remembers the preference locally.
+- All motion is disabled automatically when `prefers-reduced-motion` is enabled.
 
 ## Local preview
 

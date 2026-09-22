@@ -10,14 +10,6 @@
   var CACHE_KEY = "mspfe2019-repos-v1";
   var CACHE_TTL_MS = 30 * 60 * 1000;
 
-  var LANG_COLORS = {
-    JavaScript: "#f1e05a", TypeScript: "#3178c6", HTML: "#e34c26", CSS: "#563d7c",
-    Python: "#3572A5", "C#": "#178600", PowerShell: "#012456", Shell: "#89e051",
-    Java: "#b07219", Go: "#00ADD8", Ruby: "#701516", Rust: "#dea584",
-    Dockerfile: "#384d54", Vue: "#41b883", Jupyter: "#DA5B0B", "Jupyter Notebook": "#DA5B0B",
-    Bicep: "#519aba", SCSS: "#c6538c", PHP: "#4F5D95", Kotlin: "#A97BFF", Swift: "#F05138"
-  };
-
   var el = {
     grid: document.getElementById("repo-grid"),
     status: document.getElementById("repo-status"),
@@ -28,12 +20,18 @@
     count: document.getElementById("result-count"),
     refresh: document.getElementById("refresh"),
     stats: document.getElementById("profile-stats"),
-    year: document.getElementById("year")
+    year: document.getElementById("year"),
+    themeToggle: document.getElementById("theme-toggle"),
+    scrollProgress: document.getElementById("scroll-progress"),
+    heroVisual: document.getElementById("hero-visual"),
+    heroCanvas: document.getElementById("hero-canvas")
   };
 
   var repos = [];
 
   if (el.year) el.year.textContent = String(new Date().getFullYear());
+  restoreTheme();
+  initMotion();
 
   /* ---------- helpers ---------- */
 
@@ -237,7 +235,6 @@
   }
 
   function card(r) {
-    var color = LANG_COLORS[r.language] || "var(--ink-soft)";
     var topics = (r.topics || []).slice(0, 4);
     var updated = r.pushed_at || r.updated_at;
 
@@ -254,7 +251,7 @@
         : "") +
       '<div class="repo-meta">' +
         (r.language
-          ? '<span><span class="dot" style="background:' + esc(color) + '"></span>' + esc(r.language) + "</span>"
+          ? '<span><span class="dot"></span>' + esc(r.language) + "</span>"
           : "") +
         '<span title="Stars">&#9733; ' + compact(r.stargazers_count || 0) + "</span>" +
         '<span title="Forks">&#9282; ' + compact(r.forks_count || 0) + "</span>" +
@@ -286,6 +283,7 @@
     hideState();
     el.count.textContent = "Showing " + list.length + " of " + repos.length + " repositories";
     el.grid.innerHTML = list.map(card).join("");
+    initTilt(el.grid.querySelectorAll(".repo-card"));
   }
 
   /* ---------- events ---------- */
@@ -305,4 +303,184 @@
   if (el.refresh) el.refresh.addEventListener("click", function () { load(true); });
 
   load(false);
+
+  /* ---------- interactive presentation ---------- */
+
+  function restoreTheme() {
+    try {
+      var saved = localStorage.getItem("mose-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) { /* localStorage is optional */ }
+  }
+
+  function toggleTheme() {
+    var current = document.documentElement.getAttribute("data-theme");
+    var next = current === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("mose-theme", next); } catch (e) { /* non-fatal */ }
+    window.dispatchEvent(new Event("themechange"));
+  }
+
+  function initMotion() {
+    if (el.themeToggle) el.themeToggle.addEventListener("click", toggleTheme);
+
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var revealItems = document.querySelectorAll(".reveal");
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      revealItems.forEach(function (item) { item.classList.add("is-visible"); });
+    } else {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.14 });
+      revealItems.forEach(function (item, index) {
+        item.style.transitionDelay = Math.min(index % 4, 3) * 70 + "ms";
+        observer.observe(item);
+      });
+    }
+
+    window.addEventListener("scroll", updateScrollProgress, { passive: true });
+    updateScrollProgress();
+    initTilt(document.querySelectorAll(".tilt-card"));
+    if (!reduceMotion) initHeroGraphic();
+  }
+
+  function updateScrollProgress() {
+    if (!el.scrollProgress) return;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var ratio = max > 0 ? window.scrollY / max : 0;
+    el.scrollProgress.style.width = Math.max(0, Math.min(100, ratio * 100)) + "%";
+  }
+
+  function initTilt(nodes) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    Array.prototype.forEach.call(nodes, function (node) {
+      if (node.dataset.tiltReady) return;
+      node.dataset.tiltReady = "true";
+      node.addEventListener("pointermove", function (event) {
+        var rect = node.getBoundingClientRect();
+        var x = (event.clientX - rect.left) / rect.width;
+        var y = (event.clientY - rect.top) / rect.height;
+        var rotateX = (0.5 - y) * 5;
+        var rotateY = (x - 0.5) * 5;
+        node.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
+        node.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+        node.style.transform = "perspective(900px) rotateX(" + rotateX.toFixed(2) + "deg) rotateY(" + rotateY.toFixed(2) + "deg) translateY(-3px)";
+      });
+      node.addEventListener("pointerleave", function () {
+        node.style.transform = "";
+      });
+    });
+  }
+
+  function initHeroGraphic() {
+    if (!el.heroCanvas || !el.heroVisual) return;
+    var canvas = el.heroCanvas;
+    var ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    var pointer = { x: 0.5, y: 0.5, active: false };
+    var particles = Array.from({ length: 32 }, function (_, index) {
+      return {
+        x: ((index * 47) % 101) / 100,
+        y: ((index * 71) % 97) / 96,
+        vx: ((index % 5) - 2) * 0.00012,
+        vy: (((index * 3) % 5) - 2) * 0.00012,
+        size: 1 + (index % 3)
+      };
+    });
+
+    function resize() {
+      var rect = el.heroVisual.getBoundingClientRect();
+      var ratio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(1, Math.floor(rect.width * ratio));
+      canvas.height = Math.max(1, Math.floor(rect.height * ratio));
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    }
+
+    function themeColor(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    function frame() {
+      var width = canvas.clientWidth;
+      var height = canvas.clientHeight;
+      ctx.clearRect(0, 0, width, height);
+      var accent = themeColor("--cp-accent");
+      var border = themeColor("--cp-border");
+
+      particles.forEach(function (particle) {
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+        if (particle.x < 0 || particle.x > 1) particle.vx *= -1;
+        if (particle.y < 0 || particle.y > 1) particle.vy *= -1;
+
+        if (pointer.active) {
+          var pdx = pointer.x - particle.x;
+          var pdy = pointer.y - particle.y;
+          var distance = Math.sqrt(pdx * pdx + pdy * pdy);
+          if (distance < 0.2 && distance > 0.01) {
+            particle.x -= pdx * 0.0012;
+            particle.y -= pdy * 0.0012;
+          }
+        }
+      });
+
+      for (var i = 0; i < particles.length; i++) {
+        for (var j = i + 1; j < particles.length; j++) {
+          var a = particles[i];
+          var b = particles[j];
+          var dx = (a.x - b.x) * width;
+          var dy = (a.y - b.y) * height;
+          var d = Math.sqrt(dx * dx + dy * dy);
+          if (d < 92) {
+            ctx.globalAlpha = (1 - d / 92) * 0.45;
+            ctx.strokeStyle = border;
+            ctx.beginPath();
+            ctx.moveTo(a.x * width, a.y * height);
+            ctx.lineTo(b.x * width, b.y * height);
+            ctx.stroke();
+          }
+        }
+        ctx.globalAlpha = 0.7;
+        ctx.fillStyle = i % 4 === 0 ? accent : border;
+        ctx.beginPath();
+        ctx.arc(particles[i].x * width, particles[i].y * height, particles[i].size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(frame);
+    }
+
+    el.heroVisual.addEventListener("pointermove", function (event) {
+      var rect = el.heroVisual.getBoundingClientRect();
+      pointer.x = (event.clientX - rect.left) / rect.width;
+      pointer.y = (event.clientY - rect.top) / rect.height;
+      pointer.active = true;
+      var nodes = el.heroVisual.querySelectorAll(".orbit-node");
+      nodes.forEach(function (node) {
+        var nodeRect = node.getBoundingClientRect();
+        var cx = nodeRect.left + nodeRect.width / 2;
+        var cy = nodeRect.top + nodeRect.height / 2;
+        var distance = Math.hypot(event.clientX - cx, event.clientY - cy);
+        node.classList.toggle("is-active", distance < 90);
+      });
+    });
+    el.heroVisual.addEventListener("pointerleave", function () {
+      pointer.active = false;
+      el.heroVisual.querySelectorAll(".orbit-node").forEach(function (node) {
+        node.classList.remove("is-active");
+      });
+    });
+    window.addEventListener("resize", resize);
+    window.addEventListener("themechange", resize);
+    resize();
+    frame();
+  }
 })();
