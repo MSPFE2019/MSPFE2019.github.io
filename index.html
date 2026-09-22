@@ -32,7 +32,7 @@
     <nav class="site-nav" aria-label="Primary">
       <a href="#focus">Focus</a>
       <a href="#repos">Repositories</a>
-      <a href="#contact">Contact</a>
+      <a href="build.html">How it was built</a>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme">
         <span class="theme-icon" aria-hidden="true">◐</span>
       </button>
@@ -87,8 +87,12 @@
 
   <div class="capability-rail" aria-label="Technology focus">
     <div class="rail-track">
-      <span>Copilot Studio</span><i></i><span>Power Apps</span><i></i><span>Power Automate</span><i></i><span>Dataverse</span><i></i><span>Governance</span><i></i><span>ALM</span><i></i>
-      <span aria-hidden="true">Copilot Studio</span><i aria-hidden="true"></i><span aria-hidden="true">Power Apps</span><i aria-hidden="true"></i><span aria-hidden="true">Power Automate</span><i aria-hidden="true"></i><span aria-hidden="true">Dataverse</span><i aria-hidden="true"></i><span aria-hidden="true">Governance</span><i aria-hidden="true"></i><span aria-hidden="true">ALM</span><i aria-hidden="true"></i>
+      <div class="rail-group">
+        <span>Copilot Studio</span><i></i><span>Power Apps</span><i></i><span>Power Automate</span><i></i><span>Dataverse</span><i></i><span>Governance</span><i></i><span>ALM</span><i></i>
+      </div>
+      <div class="rail-group" aria-hidden="true">
+        <span>Copilot Studio</span><i></i><span>Power Apps</span><i></i><span>Power Automate</span><i></i><span>Dataverse</span><i></i><span>Governance</span><i></i><span>ALM</span><i></i>
+      </div>
     </div>
   </div>
 
@@ -178,23 +182,22 @@
     </div>
   </section>
 
-  <section id="contact" class="section">
-    <div class="wrap contact-inner reveal">
+  <section class="section built-with">
+    <div class="wrap built-with-inner reveal">
+      <div class="copilot-mark" aria-hidden="true">✦</div>
       <div>
-        <h2 class="section-title">Let's build something</h2>
-        <p class="section-lede">Open to collaboration on Power Platform, Copilot Studio and governance tooling.</p>
+        <p class="eyebrow">Made with an AI pair programmer</p>
+        <h2 class="section-title">Built with GitHub Copilot</h2>
+        <p class="section-lede">From an empty repository to a live, interactive GitHub Pages portfolio—designed, coded, tested, and deployed with GitHub Copilot.</p>
       </div>
-      <div class="contact-actions">
-        <a class="btn btn-primary" href="https://github.com/MSPFE2019" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn btn-ghost" href="https://github.com/MSPFE2019?tab=repositories" target="_blank" rel="noopener">All repositories</a>
-      </div>
+      <a class="btn btn-primary" href="build.html">See how it was built</a>
     </div>
   </section>
 </main>
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <p>&copy; <span id="year"></span> Mose &middot; MSPFE2019. Built as a static GitHub Pages site.</p>
+    <p>&copy; <span id="year"></span> Mose &middot; MSPFE2019. Built with GitHub Copilot and hosted on GitHub Pages.</p>
     <p class="footer-note">Repository data courtesy of the public GitHub REST API.</p>
   </div>
 </footer>

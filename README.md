@@ -7,9 +7,11 @@ API at page load, so the site never needs to be updated when repositories change
 ## Structure
 
 ```
-index.html            Landing page markup (hero, focus areas, repositories, contact)
+index.html            Landing page markup (hero, focus areas, repositories, attribution)
+build.html            Walkthrough for recreating the portfolio with GitHub Copilot
 assets/css/styles.css Responsive Microsoft-inspired theme with light/dark support
 assets/js/app.js      GitHub feed plus canvas, reveal, tilt and theme interactions
+assets/js/guide.js    Theme, reveal and scroll behavior for the build walkthrough
 .nojekyll             Serve files as-is (no Jekyll processing)
 ```
 
@@ -54,4 +56,4 @@ HTML/CSS/JS there is no build step — merging to `main` publishes to
 - Change the account: update `USER` at the top of `assets/js/app.js`.
 - Change the palette: edit the CSS custom properties in `:root` (and the dark-scheme block)
   in `assets/css/styles.css`.
-- Edit copy: the hero, focus cards and contact section are static markup in `index.html`.
+- Edit copy: the hero, focus cards and attribution section are static markup in `index.html`.

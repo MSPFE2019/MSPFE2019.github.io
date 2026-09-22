@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>How This Portfolio Was Built &middot; Mose</title>
+<meta name="description" content="A practical walkthrough for building a dynamic GitHub Pages portfolio with GitHub Copilot and the GitHub REST API." />
+<link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+<a class="skip-link" href="#guide">Skip to the guide</a>
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">Mose<span class="brand-sub">MSPFE2019</span></span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="index.html#focus">Focus</a>
+      <a href="index.html#repos">Repositories</a>
+      <a href="build.html" aria-current="page">How it was built</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme">
+        <span class="theme-icon" aria-hidden="true">◐</span>
+      </button>
+      <a class="btn btn-ghost" href="index.html">Back to portfolio</a>
+    </nav>
+  </div>
+</header>
+
+<main id="guide">
+  <section class="guide-hero">
+    <div class="wrap guide-hero-inner">
+      <div class="reveal">
+        <p class="eyebrow">GitHub Copilot + GitHub Pages</p>
+        <h1>Build a portfolio that updates itself.</h1>
+        <p class="lede">This site started as an empty repository. GitHub Copilot helped turn the idea into a responsive static site, wire it to the GitHub REST API, add interactions, test it in a browser, and publish it with GitHub Pages.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#steps">Follow the walkthrough</a>
+          <a class="btn btn-ghost" href="https://github.com/MSPFE2019/MSPFE2019.github.io" target="_blank" rel="noopener">View the source</a>
+        </div>
+      </div>
+      <div class="prompt-card reveal">
+        <div class="prompt-card-head"><span class="status-dot"></span> Starting prompt</div>
+        <pre><code>Build a polished, responsive GitHub Pages
+portfolio landing page.
+
+Fetch my public repositories from the
+GitHub REST API at runtime.
+
+Include loading, empty, error, search,
+filter, and sorting states.</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="steps" class="section">
+    <div class="wrap guide-layout">
+      <aside class="guide-nav">
+        <p class="eyebrow">On this page</p>
+        <a href="#start">1. Start the repository</a>
+        <a href="#prompt">2. Give Copilot context</a>
+        <a href="#api">3. Add live repository data</a>
+        <a href="#polish">4. Add visual polish</a>
+        <a href="#verify">5. Verify the experience</a>
+        <a href="#publish">6. Publish on Pages</a>
+      </aside>
+
+      <div class="guide-content">
+        <header class="section-heading reveal">
+          <p class="eyebrow">The recipe</p>
+          <h2 class="section-title">Six steps from blank repo to live site</h2>
+          <p class="section-lede">The stack is intentionally simple: semantic HTML, modern CSS, vanilla JavaScript, the public GitHub API, and GitHub Pages.</p>
+        </header>
+
+        <article id="start" class="guide-step reveal">
+          <span class="step-number">01</span>
+          <div>
+            <h3>Start a GitHub Pages repository</h3>
+            <p>Create a public repository named <code>YOUR-USERNAME.github.io</code>. A user site with that exact name will be available at the matching <code>github.io</code> address.</p>
+            <div class="command-block"><span>Repository name</span><code>YOUR-USERNAME.github.io</code></div>
+          </div>
+        </article>
+
+        <article id="prompt" class="guide-step reveal">
+          <span class="step-number">02</span>
+          <div>
+            <h3>Give GitHub Copilot a precise brief</h3>
+            <p>Describe the audience, visual direction, required data, interactions, states, deployment target, and validation expectations. Strong constraints produce a more complete first implementation.</p>
+            <div class="tip"><strong>Prompt tip:</strong> Ask Copilot to inspect the repository first, preserve useful content, use the existing stack, and validate the smallest appropriate checks.</div>
+          </div>
+        </article>
+
+        <article id="api" class="guide-step reveal">
+          <span class="step-number">03</span>
+          <div>
+            <h3>Fetch repositories at runtime</h3>
+            <p>The site requests public repository data directly in the browser. No build system, database, token, or manual project list is required.</p>
+            <div class="code-window">
+              <div class="code-window-head"><span></span><span></span><span></span><small>app.js</small></div>
+              <pre><code>fetch("https://api.github.com/users/USERNAME/repos" +
+      "?per_page=100&amp;sort=updated")
+  .then(response =&gt; {
+    if (!response.ok) throw new Error(response.status);
+    return response.json();
+  })
+  .then(repositories =&gt; render(repositories));</code></pre>
+            </div>
+            <p>Production-ready details matter: paginate results, escape API text before inserting HTML, show loading/error/empty states, cache results briefly, and handle rate limits.</p>
+          </div>
+        </article>
+
+        <article id="polish" class="guide-step reveal">
+          <span class="step-number">04</span>
+          <div>
+            <h3>Add movement with restraint</h3>
+            <p>This portfolio uses a small canvas particle network, floating capability labels, scroll reveals, a progress indicator, and pointer-responsive card tilt. Everything is written in native browser APIs.</p>
+            <div class="feature-pills">
+              <span>Canvas 2D</span><span>IntersectionObserver</span><span>Pointer events</span><span>CSS keyframes</span><span>Theme variables</span>
+            </div>
+            <p>Always include a <code>prefers-reduced-motion</code> fallback so people who disable motion receive a stable experience.</p>
+          </div>
+        </article>
+
+        <article id="verify" class="guide-step reveal">
+          <span class="step-number">05</span>
+          <div>
+            <h3>Verify behavior, not just appearance</h3>
+            <p>Run a JavaScript syntax check, serve the site locally, and test the important paths in a browser.</p>
+            <div class="check-grid">
+              <div><strong>✓</strong><span>Repositories load</span></div>
+              <div><strong>✓</strong><span>Search and filters work</span></div>
+              <div><strong>✓</strong><span>Empty and error states display</span></div>
+              <div><strong>✓</strong><span>Theme preference persists</span></div>
+              <div><strong>✓</strong><span>Responsive layouts hold up</span></div>
+              <div><strong>✓</strong><span>Reduced motion is respected</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article id="publish" class="guide-step reveal">
+          <span class="step-number">06</span>
+          <div>
+            <h3>Push to main and enable GitHub Pages</h3>
+            <p>For a user site repository, publish from the root of the <code>main</code> branch. Add a <code>.nojekyll</code> file when you want GitHub Pages to serve the static files exactly as written.</p>
+            <div class="command-block"><span>Live address</span><code>https://YOUR-USERNAME.github.io/</code></div>
+            <p>After deployment, verify the live HTML, CSS, JavaScript, API data, and interactive features—not only the build status.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section built-with">
+    <div class="wrap built-with-inner reveal">
+      <div class="copilot-mark" aria-hidden="true">✦</div>
+      <div>
+        <p class="eyebrow">Your turn</p>
+        <h2 class="section-title">Start with a clear idea. Iterate with Copilot.</h2>
+        <p class="section-lede">The best results come from combining specific requirements with browser testing and a few focused rounds of feedback.</p>
+      </div>
+      <a class="btn btn-primary" href="index.html">Explore the finished site</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>&copy; <span id="year"></span> Mose &middot; MSPFE2019. Built with GitHub Copilot and hosted on GitHub Pages.</p>
+    <p><a href="https://github.com/MSPFE2019/MSPFE2019.github.io" target="_blank" rel="noopener">View source on GitHub</a></p>
+  </div>
+</footer>
+
+<script src="assets/js/guide.js"></script>
+</body>
+</html>
