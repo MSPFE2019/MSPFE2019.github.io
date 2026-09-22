@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mose &middot; Power Platform &amp; Copilot Studio Portfolio</title>
+<meta name="description" content="Portfolio of Mose (MSPFE2019) — Microsoft Power Platform, Copilot Studio and governance engineering work, with a live feed of public GitHub repositories." />
+<meta property="og:title" content="Mose · Power Platform & Copilot Studio Portfolio" />
+<meta property="og:description" content="Live portfolio of open-source work across Power Platform, Copilot Studio and governance tooling." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b5cab'/%3E%3Ctext x='16' y='22' font-family='Segoe UI,Arial' font-size='16' font-weight='700' fill='white' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://api.github.com" />
+<link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+<a class="skip-link" href="#repos">Skip to repositories</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">Mose<span class="brand-sub">MSPFE2019</span></span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#focus">Focus</a>
+      <a href="#repos">Repositories</a>
+      <a href="#contact">Contact</a>
+      <a class="btn btn-ghost" href="https://github.com/MSPFE2019" target="_blank" rel="noopener">GitHub profile</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Microsoft Power Platform &middot; Copilot Studio</p>
+        <h1>Building governed, low-code solutions that scale.</h1>
+        <p class="lede">
+          I design and ship Power Platform and Copilot Studio solutions — agents, governance
+          guardrails, ALM pipelines and admin tooling — and share the reusable pieces as open source.
+          Everything below is pulled live from my public GitHub repositories.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#repos">Browse repositories</a>
+          <a class="btn btn-ghost" href="https://github.com/MSPFE2019?tab=repositories" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+        <dl class="hero-stats" id="profile-stats">
+          <div><dt>Public repos</dt><dd data-stat="repos">—</dd></div>
+          <div><dt>Total stars</dt><dd data-stat="stars">—</dd></div>
+          <div><dt>Languages</dt><dd data-stat="languages">—</dd></div>
+        </dl>
+      </div>
+      <div class="hero-card" aria-hidden="true">
+        <div class="hero-card-glow"></div>
+        <div class="hero-card-body">
+          <div class="chip-row">
+            <span class="chip">Power Apps</span>
+            <span class="chip">Power Automate</span>
+            <span class="chip">Copilot Studio</span>
+          </div>
+          <div class="chip-row">
+            <span class="chip">Dataverse</span>
+            <span class="chip">Governance</span>
+            <span class="chip">ALM</span>
+          </div>
+          <div class="hero-card-bars">
+            <span style="--w:88%"></span>
+            <span style="--w:64%"></span>
+            <span style="--w:76%"></span>
+            <span style="--w:41%"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="focus" class="section">
+    <div class="wrap">
+      <h2 class="section-title">What I focus on</h2>
+      <p class="section-lede">Practical engineering across the Microsoft low-code stack, with governance treated as a first-class feature.</p>
+      <div class="focus-grid">
+        <article class="focus-card">
+          <h3>Copilot Studio agents</h3>
+          <p>Topic design, knowledge sources, actions and connector wiring — plus testing and publishing patterns that survive real users.</p>
+        </article>
+        <article class="focus-card">
+          <h3>Governance &amp; admin</h3>
+          <p>Environment strategy, DLP policies, CoE-style reporting and automated guardrails so makers can move fast safely.</p>
+        </article>
+        <article class="focus-card">
+          <h3>ALM &amp; automation</h3>
+          <p>Solution-aware pipelines, source control for Power Platform, and scripted deployments with PowerShell and the Power Platform CLI.</p>
+        </article>
+        <article class="focus-card">
+          <h3>Data &amp; integration</h3>
+          <p>Dataverse modelling, SharePoint and Graph integration, and migrating legacy Access apps onto modern platforms.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="repos" class="section section-alt">
+    <div class="wrap">
+      <div class="repos-head">
+        <div>
+          <h2 class="section-title">Repositories</h2>
+          <p class="section-lede">Live from the GitHub REST API — always current, never hand-maintained.</p>
+        </div>
+        <button class="btn btn-ghost" type="button" id="refresh" aria-label="Refresh repositories">Refresh</button>
+      </div>
+
+      <div class="controls" role="search">
+        <div class="field field-grow">
+          <label for="search">Search</label>
+          <input id="search" type="search" placeholder="Search name, description or topic…" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="language">Language</label>
+          <select id="language"><option value="">All languages</option></select>
+        </div>
+        <div class="field">
+          <label for="sort">Sort by</label>
+          <select id="sort">
+            <option value="updated">Recently updated</option>
+            <option value="stars">Most stars</option>
+            <option value="name">Name (A–Z)</option>
+            <option value="created">Newest</option>
+          </select>
+        </div>
+        <div class="field field-check">
+          <input id="hide-forks" type="checkbox" checked />
+          <label for="hide-forks">Hide forks</label>
+        </div>
+      </div>
+
+      <p class="result-count" id="result-count" role="status" aria-live="polite"></p>
+
+      <div id="repo-status" class="state" hidden></div>
+
+      <div id="repo-grid" class="repo-grid" aria-busy="true">
+        <div class="repo-card skeleton"><span></span><span></span><span></span></div>
+        <div class="repo-card skeleton"><span></span><span></span><span></span></div>
+        <div class="repo-card skeleton"><span></span><span></span><span></span></div>
+        <div class="repo-card skeleton"><span></span><span></span><span></span></div>
+        <div class="repo-card skeleton"><span></span><span></span><span></span></div>
+        <div class="repo-card skeleton"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="wrap contact-inner">
+      <div>
+        <h2 class="section-title">Let's build something</h2>
+        <p class="section-lede">Open to collaboration on Power Platform, Copilot Studio and governance tooling.</p>
+      </div>
+      <div class="contact-actions">
+        <a class="btn btn-primary" href="https://github.com/MSPFE2019" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-ghost" href="https://github.com/MSPFE2019?tab=repositories" target="_blank" rel="noopener">All repositories</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>&copy; <span id="year"></span> Mose &middot; MSPFE2019. Built as a static GitHub Pages site.</p>
+    <p class="footer-note">Repository data courtesy of the public GitHub REST API.</p>
+  </div>
+</footer>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
