@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="terminal-mode">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,8 +7,7 @@
   <script>
     (() => {
       const param = new URLSearchParams(window.location.search).get("scoutTheme");
-      const theme =
-        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      const theme = param === "light" ? "light" : "dark";
       document.documentElement.setAttribute("data-theme", theme);
     })();
   </script>
@@ -90,7 +89,7 @@
     .topbar nav { display: flex; gap: 18px; flex-wrap: wrap; }
     .topbar nav a { color: var(--cp-text-muted); text-decoration: none; font-size: .94rem; }
     .topbar nav a:hover { color: var(--cp-accent); }
-    .hero {
+    .solutions-hero {
       display: grid; grid-template-columns: 1.3fr .7fr; gap: 32px; align-items: end;
       padding: 72px 0 48px;
     }
@@ -99,7 +98,7 @@
     h1 { font-size: clamp(2.5rem, 6vw, 5rem); letter-spacing: -.055em; max-width: 760px; }
     h2 { font-size: clamp(1.7rem, 3vw, 2.5rem); letter-spacing: -.035em; }
     h3 { font-size: 1.1rem; }
-    .hero p { max-width: 680px; color: var(--cp-text-muted); font-size: 1.13rem; }
+    .solutions-hero p { max-width: 680px; color: var(--cp-text-muted); font-size: 1.13rem; }
     .hero-card {
       padding: 24px; border: 1px solid var(--cp-border); border-radius: 16px;
       background: var(--cp-surface); box-shadow: 0 0 2px var(--cp-border);
@@ -184,7 +183,7 @@
     .score strong { color: var(--cp-accent); font-size: 3rem; }
     footer { padding-top: 30px; color: var(--cp-text-muted); font-size: .9rem; border-top: 1px solid var(--cp-border); }
     @media (max-width: 820px) {
-      .hero, .quiz, .design-example { grid-template-columns: 1fr; }
+      .solutions-hero, .quiz, .design-example { grid-template-columns: 1fr; }
       .steps { grid-template-columns: repeat(2, 1fr); }
       .cards, .compare { grid-template-columns: 1fr; }
       .score { border-left: 0; border-top: 1px solid var(--cp-border); padding-top: 20px; }
@@ -192,26 +191,33 @@
     @media (max-width: 520px) {
       .shell { padding: 0 16px 42px; }
       .topbar { align-items: flex-start; flex-direction: column; }
-      .hero { padding-top: 48px; }
+      .solutions-hero { padding-top: 48px; }
       .steps { grid-template-columns: 1fr; }
     }
   </style>
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body>
+<body class="solutions-page">
+  <canvas class="code-rain" id="code-rain" aria-hidden="true"></canvas>
+  <a class="skip-link" href="#lifecycle">Skip to solutions guide</a>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
   <div class="shell">
     <header class="topbar">
       <div class="brand"><span class="mark">PP</span><span>MSPFE2019 · Power Platform</span></div>
       <nav aria-label="Primary navigation">
+        <a href="index.html">Portfolio</a>
+        <a href="build.html">How it was built</a>
         <a href="#lifecycle">Lifecycle</a>
         <a href="#components">Components</a>
         <a href="#example">Worked example</a>
         <a href="#alm">ALM</a>
         <a href="#quiz">Check your knowledge</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme">◐</button>
       </nav>
     </header>
 
     <main>
-      <section class="hero">
+      <section class="solutions-hero">
         <div>
           <div class="eyebrow">A practical field guide</div>
           <h1>Ship Power Platform solutions with confidence.</h1>
@@ -425,5 +431,7 @@
     });
     renderQuestion();
   </script>
+  <script src="assets/js/guide.js"></script>
+  <script src="assets/js/rain.js"></script>
 </body>
 </html>

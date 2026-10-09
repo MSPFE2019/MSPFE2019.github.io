@@ -495,6 +495,17 @@ button, input, select { font: inherit; }
 .terminal-mode .built-with { background: var(--cp-surface); }
 .terminal-mode .section-alt { background: var(--cp-bg-elevated); }
 .terminal-mode .guide-step { scroll-margin-top: 90px; }
+.solutions-page .shell { width: min(100%, 1180px); }
+.solutions-page .solutions-hero { position: relative; }
+.solutions-page .topbar { font-family: Consolas, "Courier New", Courier, monospace; }
+.solutions-page .topbar nav { align-items: center; }
+.solutions-page .card,
+.solutions-page .hero-card,
+.solutions-page .quiz,
+.solutions-page .design-example,
+.solutions-page .step { border-radius: 4px; }
+.solutions-page .card:hover,
+.solutions-page .step:hover { box-shadow: 0 0 24px var(--cp-highlight); }
 .terminal-mode section[id] { scroll-margin-top: 80px; }
 @media (prefers-reduced-motion: reduce) {
   .code-rain { display: none; }
