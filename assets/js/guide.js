@@ -7,8 +7,9 @@
   var year = document.getElementById("year");
 
   try {
-    var saved = localStorage.getItem("mose-theme");
-    if (saved === "light" || saved === "dark") root.setAttribute("data-theme", saved);
+    var saved = localStorage.getItem("mose-terminal-theme");
+    if (!new URLSearchParams(window.location.search).has("scoutTheme") &&
+        (saved === "light" || saved === "dark")) root.setAttribute("data-theme", saved);
   } catch (e) { /* localStorage is optional */ }
 
   if (year) year.textContent = String(new Date().getFullYear());
@@ -17,7 +18,7 @@
     toggle.addEventListener("click", function () {
       var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
-      try { localStorage.setItem("mose-theme", next); } catch (e) { /* non-fatal */ }
+      try { localStorage.setItem("mose-terminal-theme", next); } catch (e) { /* non-fatal */ }
     });
   }
 

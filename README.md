@@ -12,6 +12,7 @@ build.html            Walkthrough for recreating the portfolio with GitHub Copil
 assets/css/styles.css Responsive Microsoft-inspired theme with light/dark support
 assets/js/app.js      GitHub feed plus canvas, reveal, tilt and theme interactions
 assets/js/guide.js    Theme, reveal and scroll behavior for the build walkthrough
+assets/js/rain.js     Digital code-rain background shared by both pages
 .nojekyll             Serve files as-is (no Jekyll processing)
 ```
 
@@ -37,6 +38,8 @@ normal browsing well under that.
 - Sections reveal as they enter the viewport, with a page scroll-progress indicator.
 - A header control toggles light/dark themes and remembers the preference locally.
 - All motion is disabled automatically when `prefers-reduced-motion` is enabled.
+- Both pages use a green-on-dark digital-terminal aesthetic by default, with optional
+  light mode. Code rain stops when the tab is hidden and respects reduced motion.
 
 ## Local preview
 

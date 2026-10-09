@@ -307,8 +307,9 @@
   /* ---------- interactive presentation ---------- */
 
   function restoreTheme() {
+    if (new URLSearchParams(window.location.search).has("scoutTheme")) return;
     try {
-      var saved = localStorage.getItem("mose-theme");
+      var saved = localStorage.getItem("mose-terminal-theme");
       if (saved === "light" || saved === "dark") {
         document.documentElement.setAttribute("data-theme", saved);
       }
@@ -319,7 +320,7 @@
     var current = document.documentElement.getAttribute("data-theme");
     var next = current === "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", next);
-    try { localStorage.setItem("mose-theme", next); } catch (e) { /* non-fatal */ }
+    try { localStorage.setItem("mose-terminal-theme", next); } catch (e) { /* non-fatal */ }
     window.dispatchEvent(new Event("themechange"));
   }
 

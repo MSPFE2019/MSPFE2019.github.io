@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="terminal-mode">
 <head>
 <script>
   (() => {
     const param = new URLSearchParams(window.location.search).get("scoutTheme");
-    const theme =
-      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    const theme = param === "light" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", theme);
   })();
 </script>
@@ -20,6 +19,7 @@
 <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
+<canvas class="code-rain" id="code-rain" aria-hidden="true"></canvas>
 <a class="skip-link" href="#repos">Skip to repositories</a>
 <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
@@ -45,7 +45,7 @@
   <section class="hero">
     <div class="wrap hero-inner">
       <div class="hero-copy reveal">
-        <p class="eyebrow">Microsoft Power Platform &middot; Copilot Studio</p>
+        <p class="eyebrow">[ SYSTEM ONLINE ] &middot; Microsoft Power Platform</p>
         <h1>Building <span class="accent-text">governed intelligence</span> that scales.</h1>
         <p class="lede">
           I design and ship Power Platform and Copilot Studio solutions — agents, governance
@@ -53,7 +53,7 @@
           Everything below is pulled live from my public GitHub repositories.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#repos">Browse repositories</a>
+          <a class="btn btn-primary" href="#repos">Enter the repository grid &rarr;</a>
           <a class="btn btn-ghost" href="https://github.com/MSPFE2019?tab=repositories" target="_blank" rel="noopener">View on GitHub</a>
         </div>
         <dl class="hero-stats" id="profile-stats">
@@ -67,7 +67,7 @@
         <div class="orbit-core" aria-hidden="true">
           <span class="core-pulse"></span>
           <strong>M</strong>
-          <small>Build system</small>
+          <small>MOSE // CORE</small>
         </div>
         <div class="orbit-node node-agent" data-node="agent"><span>✦</span>Copilot agents</div>
         <div class="orbit-node node-apps" data-node="apps"><span>◇</span>Power Apps</div>
@@ -77,7 +77,7 @@
           <span class="status-dot"></span>
           <div>
             <small>System status</small>
-            <strong>All flows connected</strong>
+            <strong>Secure connection established</strong>
           </div>
         </div>
       </div>
@@ -203,5 +203,6 @@
 </footer>
 
 <script src="assets/js/app.js"></script>
+<script src="assets/js/rain.js"></script>
 </body>
 </html>
