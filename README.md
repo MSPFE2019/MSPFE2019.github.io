@@ -109,8 +109,9 @@ display, and the storage/retention used here under your LinkedIn agreement.
 
 4. Select **GitHub Actions** as the Pages source, merge the integration to `main`, then
    manually run the workflow and check the fetch/deploy logs. There is deliberately no
-   committed sample feed; until the first successful deployment the page reports that
-   LinkedIn is not connected.
+   committed sample feed. If `LINKEDIN_ACCESS_TOKEN` is not configured, the sync is skipped
+   and the site deploys with a message that LinkedIn is not connected. Once the secret is
+   configured, the author URN and API version must also be valid for the sync to succeed.
 
 This workflow only reads with an access token; it does **not** need a client secret and
 does **not** automatically refresh tokens. Rotate `LINKEDIN_ACCESS_TOKEN` before its
@@ -144,12 +145,13 @@ newsletters, nor full article bodies. Native articles appear only if LinkedIn ex
 them through this author's returned posts; visitors follow the public links to read more.
 The integration does not scrape LinkedIn or invent an articles endpoint.
 
-On invalid configuration, expired tokens (401), insufficient scope/author access (403),
-rate limits (429), malformed responses, or network errors, the workflow fails with a
-useful message and does not deploy. It never logs access tokens or raw API response bodies.
-The previously deployed site remains available; its last-sync timestamp explicitly marks
-feeds older than 48 hours as delayed. API-returned empty public feeds are a valid empty
-state, not a fabricated fallback. A successful later sync removes disappeared/non-public
+When the access-token secret is absent, the workflow skips the sync and deploys without a
+feed. Once configured, invalid settings, expired tokens (401), insufficient scope/author
+access (403), rate limits (429), malformed responses, or network errors fail with a useful
+message and do not deploy. The sync never logs access tokens or raw API response bodies.
+The previously deployed site remains available after a failed sync; its last-sync timestamp
+explicitly marks feeds older than 48 hours as delayed. API-returned empty public feeds are a
+valid empty state, not a fabricated fallback. A successful later sync removes disappeared/non-public
 posts from this recent feed. Failed runs cannot remove previously public content: for an
 urgent privacy deletion, disable the workflow and remove the existing Pages deployment
 through repository settings rather than waiting for a token fix.
