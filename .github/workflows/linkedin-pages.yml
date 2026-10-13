@@ -43,6 +43,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_*.py'
           node --test tests/linkedin.test.cjs
       - name: Fetch public LinkedIn previews
+        if: ${{ env.LINKEDIN_ACCESS_TOKEN != '' }}
         env:
           LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
           LINKEDIN_AUTHOR_URN: ${{ vars.LINKEDIN_AUTHOR_URN }}
