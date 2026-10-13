@@ -10,9 +10,9 @@
 </script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Mose &middot; Power Platform &amp; Copilot Studio Portfolio</title>
-<meta name="description" content="Portfolio of Mose (MSPFE2019) — Microsoft Power Platform, Copilot Studio and governance engineering work, with a live feed of public GitHub repositories." />
-<meta property="og:title" content="Mose · Power Platform & Copilot Studio Portfolio" />
+<title>Mose Richardson &middot; Power Platform &amp; Copilot Studio Portfolio</title>
+<meta name="description" content="Portfolio of Mose Richardson (MSPFE2019) — Microsoft Power Platform, Copilot Studio and governance engineering work, with a live feed of public GitHub repositories." />
+<meta property="og:title" content="Mose Richardson · Power Platform & Copilot Studio Portfolio" />
 <meta property="og:description" content="Live portfolio of open-source work across Power Platform, Copilot Studio and governance tooling." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://api.github.com" />
@@ -27,11 +27,12 @@
   <div class="wrap header-inner">
     <a class="brand" href="#top">
       <span class="brand-mark" aria-hidden="true"></span>
-      <span class="brand-text">Mose<span class="brand-sub">MSPFE2019</span></span>
+      <span class="brand-text">Mose Richardson<span class="brand-sub">MSPFE2019</span></span>
     </a>
     <nav class="site-nav" aria-label="Primary">
       <a href="#focus">Focus</a>
       <a href="#repos">Repositories</a>
+      <a href="#linkedin">LinkedIn</a>
       <a href="power-platform-solutions-guide.html">Solutions guide</a>
       <a href="build.html">How it was built</a>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme">
@@ -51,7 +52,7 @@
         <p class="lede">
           I design and ship Power Platform and Copilot Studio solutions — agents, governance
           guardrails, ALM pipelines and admin tooling — and share the reusable pieces as open source.
-          Everything below is pulled live from my public GitHub repositories.
+          Explore my public GitHub repositories and recent public LinkedIn posts below.
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#repos">Enter the repository grid &rarr;</a>
@@ -68,7 +69,7 @@
         <div class="orbit-core" aria-hidden="true">
           <span class="core-pulse"></span>
           <strong>M</strong>
-          <small>MOSE // CORE</small>
+          <small>MOSE RICHARDSON // CORE</small>
         </div>
         <div class="orbit-node node-agent" data-node="agent"><span>✦</span>Copilot agents</div>
         <div class="orbit-node node-apps" data-node="apps"><span>◇</span>Power Apps</div>
@@ -183,6 +184,20 @@
     </div>
   </section>
 
+  <section id="linkedin" class="section">
+    <div class="wrap">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Ideas &amp; insights</p>
+        <h2 class="section-title">LinkedIn posts &amp; articles</h2>
+        <p class="section-lede">Recent public posts and article previews, refreshed daily from LinkedIn.</p>
+      </div>
+      <p id="linkedin-updated" class="result-count" role="status" aria-live="polite"></p>
+      <div id="linkedin-status" class="state" role="status" aria-live="polite">Loading LinkedIn updates...</div>
+      <div id="linkedin-grid" class="repo-grid" aria-busy="true"></div>
+      <noscript><p>Enable JavaScript to view the LinkedIn feed.</p></noscript>
+    </div>
+  </section>
+
   <section class="section built-with">
     <div class="wrap built-with-inner reveal">
       <div class="copilot-mark" aria-hidden="true">✦</div>
@@ -198,12 +213,13 @@
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <p>&copy; <span id="year"></span> Mose &middot; MSPFE2019. Built with GitHub Copilot and hosted on GitHub Pages.</p>
+    <p>&copy; <span id="year"></span> Mose Richardson &middot; MSPFE2019. Built with GitHub Copilot and hosted on GitHub Pages.</p>
     <p class="footer-note">Repository data courtesy of the public GitHub REST API.</p>
   </div>
 </footer>
 
 <script src="assets/js/app.js"></script>
+<script src="assets/js/linkedin.js"></script>
 <script src="assets/js/rain.js"></script>
 </body>
 </html>

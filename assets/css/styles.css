@@ -116,7 +116,7 @@ button, input, select { font: inherit; }
 .brand:hover .brand-mark { transform: rotate(-4deg) scale(1.06); }
 .brand-text { display: flex; flex-direction: column; line-height: 1.05; font-size: 1.06rem; }
 .brand-sub { font-size: .68rem; font-weight: 600; color: var(--cp-text-muted); letter-spacing: .09em; text-transform: uppercase; }
-.site-nav { display: flex; align-items: center; gap: 1.15rem; }
+.site-nav { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 1.15rem; }
 .site-nav a { color: var(--cp-text-muted); text-decoration: none; font-weight: 600; font-size: .92rem; }
 .site-nav a:hover { color: var(--cp-accent); }
 .theme-toggle {
@@ -193,7 +193,7 @@ button, input, select { font: inherit; }
   border-radius: 50%; box-shadow: 0 0 0 12px var(--cp-accent-soft);
 }
 .orbit-core strong { font-size: 2rem; line-height: 1; }
-.orbit-core small { font-size: .65rem; font-weight: 700; letter-spacing: .05em; }
+.orbit-core small { max-width: 100%; text-align: center; font-size: .65rem; font-weight: 700; letter-spacing: .05em; }
 .core-pulse {
   position: absolute; inset: -12px; border: 1px solid var(--cp-accent); border-radius: 50%;
   animation: pulse 2.4s ease-out infinite;
@@ -302,6 +302,9 @@ button, input, select { font: inherit; }
 .topic { padding: .16rem .45rem; color: var(--cp-accent); background: var(--cp-accent-soft); border-radius: .625rem; font-size: .68rem; font-weight: 650; }
 .repo-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem; color: var(--cp-text-muted); font-size: .78rem; }
 .repo-meta .dot { display: inline-block; width: 9px; height: 9px; margin-right: .32rem; background: var(--cp-accent); border-radius: 50%; }
+.linkedin-title { font-size: 1.1rem; overflow-wrap: anywhere; }
+.linkedin-title a { text-decoration: none; }
+.linkedin-text { white-space: pre-wrap; overflow-wrap: anywhere; }
 .repo-links { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: auto; padding-top: .25rem; }
 .repo-links a { padding: .32rem .65rem; color: var(--cp-text); border: 1px solid var(--cp-border); border-radius: .625rem; font-size: .8rem; font-weight: 650; text-decoration: none; }
 .repo-links a:hover { color: var(--cp-accent); background: var(--cp-accent-soft); border-color: var(--cp-accent); }
